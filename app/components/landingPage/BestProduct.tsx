@@ -1,6 +1,6 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react';
-import { Star, ShoppingCart, Heart, Search, ChevronDown } from 'lucide-react';
+import { Star, ShoppingCart, Heart, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Product } from '@/types/product';
 import Image from 'next/image';
 
@@ -28,11 +28,15 @@ export const BestProduct = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOption, setSortOption] = useState('default');
     const [cart, setCart] = useState<{ id: number, quantity: number }[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
 
     // Fetch products from API
     const fetchProducts = useCallback(async () => {
         try {
             setLoading(true);
+            // Reset pagination ketika kategori berubah
+            setCurrentPage(1);
 
             // Langsung ambil berdasarkan kategori aktif
             const url = `https://dummyjson.com/products/category/${activeCategory}`;
@@ -108,8 +112,39 @@ export const BestProduct = () => {
     // Get cart count
     const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
+    // Calculate pagination
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    const currentProducts = filteredProducts.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    // Handle page change
+    const goToPage = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+        // Scroll to top of product section
+        window.scrollTo({
+            top: document.getElementById('products-section')?.offsetTop || 0,
+            behavior: 'smooth'
+        });
+    };
+
+    // Go to next page
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+            goToPage(currentPage + 1);
+        }
+    };
+
+    // Go to previous page
+    const prevPage = () => {
+        if (currentPage > 1) {
+            goToPage(currentPage - 1);
+        }
+    };
+
     return (
-        <section className="py-16 px-4 md:px-8 lg:px-16 bg-gray-50 lg:pt-72">
+        <section id="products-section" className="py-16 px-4 md:px-8 lg:px-16 bg-gray-50 lg:pt-72">
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
                 <div className="text-center mb-12">
@@ -131,7 +166,10 @@ export const BestProduct = () => {
                             className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             placeholder="Search products..."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value);
+                                setCurrentPage(1); // Reset pagination ketika pencarian berubah
+                            }}
                         />
                     </div>
 
@@ -140,7 +178,10 @@ export const BestProduct = () => {
                         <select
                             className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 pr-8 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             value={sortOption}
-                            onChange={(e) => setSortOption(e.target.value)}
+                            onChange={(e) => {
+                                setSortOption(e.target.value);
+                                setCurrentPage(1); // Reset pagination ketika sorting berubah
+                            }}
                         >
                             {SORT_OPTIONS.map(option => (
                                 <option key={option.value} value={option.value}>
@@ -173,7 +214,10 @@ export const BestProduct = () => {
                         {CATEGORIES.map((category) => (
                             <button
                                 key={category}
-                                onClick={() => setActiveCategory(category)}
+                                onClick={() => {
+                                    setActiveCategory(category);
+                                    // Tidak perlu reset pagination di sini karena sudah di-handle di fetchProducts
+                                }}
                                 className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === category
                                         ? 'bg-blue-600 text-white shadow-md'
                                         : 'text-gray-700 hover:bg-gray-200'
@@ -195,97 +239,136 @@ export const BestProduct = () => {
                         <p className="text-gray-500 text-lg">No products found matching your criteria.</p>
                     </div>
                 ) : (
-                    /* Product Grid */
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {filteredProducts.map((product) => (
-                            <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                                {/* Product Image */}
-                                <div
-                                    className="relative h-48 bg-gray-200 cursor-pointer"
-                                    onClick={() => window.location.href = `/products/${product.title}`}
-                                >
-                                    <Image
-                                        src={product.thumbnail}
-                                        alt={product.title}
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                                        className="object-cover"
-                                        priority
-                                    />
-                                    {/* Discount Badge */}
-                                    {product.discountPercentage > 0 && (
-                                        <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                            {Math.round(product.discountPercentage)}% OFF
-                                        </div>
-                                    )}
-                                    {/* Wishlist Button */}
-                                    <button
-                                        className="absolute top-2 right-2 bg-white p-1.5 rounded-full shadow-sm hover:bg-gray-100"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Mencegah event click sampai ke parent
-                                            // Logic untuk wishlist
-                                        }}
-                                    >
-                                        <Heart className="w-4 h-4 text-gray-600" />
-                                    </button>
-                                </div>
-
-                                {/* Product Info */}
-                                <div className="p-4">
-                                    {/* Category */}
-                                    <div className="text-xs text-blue-600 font-medium mb-1">
-                                        {product.category}
-                                    </div>
-
-                                    {/* Title - Bisa diklik untuk ke halaman detail */}
-                                    <h3
-                                        className="font-medium text-gray-900 mb-2 truncate cursor-pointer hover:text-blue-600"
+                    <>
+                        {/* Product Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {currentProducts.map((product) => (
+                                <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                                    {/* Product Image */}
+                                    <div
+                                        className="relative h-48 bg-gray-200 cursor-pointer"
                                         onClick={() => window.location.href = `/products/${product.title}`}
                                     >
-                                        {product.title}
-                                    </h3>
-
-                                    {/* Rating */}
-                                    <div className="flex items-center mb-2">
-                                        <div className="flex text-yellow-400">
-                                            <Star className="w-4 h-4 fill-current" />
-                                        </div>
-                                        <span className="text-sm text-gray-600 ml-1">
-                                            {product.rating.toFixed(1)}
-                                        </span>
+                                        <Image
+                                            src={product.thumbnail}
+                                            alt={product.title}
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                                            className="object-cover"
+                                            priority
+                                        />
+                                        {/* Discount Badge */}
+                                        {product.discountPercentage > 0 && (
+                                            <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                                {Math.round(product.discountPercentage)}% OFF
+                                            </div>
+                                        )}
+                                        {/* Wishlist Button */}
+                                        <button
+                                            className="absolute top-2 right-2 bg-white p-1.5 rounded-full shadow-sm hover:bg-gray-100"
+                                            onClick={(e) => {
+                                                e.stopPropagation(); // Mencegah event click sampai ke parent
+                                                // Logic untuk wishlist
+                                            }}
+                                        >
+                                            <Heart className="w-4 h-4 text-gray-600" />
+                                        </button>
                                     </div>
 
-                                    {/* Price and Actions */}
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            <span className="text-lg font-bold text-gray-900">
-                                                ${product.price.toFixed(2)}
-                                            </span>
-                                            {product.discountPercentage > 0 && (
-                                                <span className="text-sm text-gray-500 line-through ml-2">
-                                                    ${(product.price / (1 - product.discountPercentage / 100)).toFixed(2)}
-                                                </span>
-                                            )}
+                                    {/* Product Info */}
+                                    <div className="p-4">
+                                        {/* Category */}
+                                        <div className="text-xs text-blue-600 font-medium mb-1">
+                                            {product.category}
                                         </div>
 
-                                        <div className="flex space-x-2">
+                                        {/* Title - Bisa diklik untuk ke halaman detail */}
+                                        <h3
+                                            className="font-medium text-gray-900 mb-2 truncate cursor-pointer hover:text-blue-600"
+                                            onClick={() => window.location.href = `/products/${product.title}`}
+                                        >
+                                            {product.title}
+                                        </h3>
 
-                                            {/* Cart Button */}
-                                            <button
-                                                className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700"
-                                                onClick={(e) => {
-                                                    e.stopPropagation(); // Mencegah event click sampai ke parent
-                                                    addToCart(product.id);
-                                                }}
-                                            >
-                                                <ShoppingCart className="w-4 h-4" />
-                                            </button>
+                                        {/* Rating */}
+                                        <div className="flex items-center mb-2">
+                                            <div className="flex text-yellow-400">
+                                                <Star className="w-4 h-4 fill-current" />
+                                            </div>
+                                            <span className="text-sm text-gray-600 ml-1">
+                                                {product.rating.toFixed(1)}
+                                            </span>
+                                        </div>
+
+                                        {/* Price and Actions */}
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <span className="text-lg font-bold text-gray-900">
+                                                    ${product.price.toFixed(2)}
+                                                </span>
+                                                {product.discountPercentage > 0 && (
+                                                    <span className="text-sm text-gray-500 line-through ml-2">
+                                                        ${(product.price / (1 - product.discountPercentage / 100)).toFixed(2)}
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                            <div className="flex space-x-2">
+
+                                                {/* Cart Button */}
+                                                <button
+                                                    className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation(); // Mencegah event click sampai ke parent
+                                                        addToCart(product.id);
+                                                    }}
+                                                >
+                                                    <ShoppingCart className="w-4 h-4" />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            ))}
+                        </div>
+
+                        {/* Pagination */}
+                        {totalPages > 1 && (
+                            <div className="flex justify-center items-center mt-12">
+                                <button
+                                    onClick={prevPage}
+                                    disabled={currentPage === 1}
+                                    className={`p-2 rounded-full mr-2 ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+                                >
+                                    <ChevronLeft className="h-5 w-5" />
+                                </button>
+                                
+                                <div className="flex space-x-1">
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                        <button
+                                            key={page}
+                                            onClick={() => goToPage(page)}
+                                            className={`h-8 w-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                                                currentPage === page
+                                                    ? 'bg-blue-600 text-white'
+                                                    : 'text-gray-700 hover:bg-gray-200'
+                                            }`}
+                                        >
+                                            {page}
+                                        </button>
+                                    ))}
+                                </div>
+                                
+                                <button
+                                    onClick={nextPage}
+                                    disabled={currentPage === totalPages}
+                                    className={`p-2 rounded-full ml-2 ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+                                >
+                                    <ChevronRight className="h-5 w-5" />
+                                </button>
                             </div>
-                        ))}
-                    </div>
+                        )}
+                    </>
                 )}
             </div>
         </section>
