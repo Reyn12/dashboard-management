@@ -256,12 +256,12 @@ export const BestProduct = () => {
                 ) : (
                     <>
                         {/* Product Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
                             {currentProducts.map((product) => (
                                 <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                                     {/* Product Image */}
                                     <div
-                                        className="relative h-48 bg-gray-200 cursor-pointer"
+                                        className="relative h-36 sm:h-40 md:h-48 bg-gray-200 cursor-pointer"
                                         onClick={() => window.location.href = `/products/${product.title}`}
                                     >
                                         <Image
@@ -293,54 +293,52 @@ export const BestProduct = () => {
                                     </div>
 
                                     {/* Product Info */}
-                                    <div className="p-4">
+                                    <div className="p-2 sm:p-3 md:p-4">
                                         {/* Category */}
-                                        <div className="text-xs text-blue-600 font-medium mb-1">
+                                        <div className="text-xs text-blue-600 font-medium mb-0.5 sm:mb-1">
                                             {product.category}
                                         </div>
 
                                         {/* Title - Bisa diklik untuk ke halaman detail */}
                                         <h3
-                                            className="font-medium text-gray-900 mb-2 truncate cursor-pointer hover:text-blue-600"
+                                            className="font-medium text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base truncate cursor-pointer hover:text-blue-600"
                                             onClick={() => window.location.href = `/products/${product.title}`}
                                         >
                                             {product.title}
                                         </h3>
 
                                         {/* Rating */}
-                                        <div className="flex items-center mb-2">
+                                        <div className="flex items-center mb-1 sm:mb-2">
                                             <div className="flex text-yellow-400">
-                                                <Star className="w-4 h-4 fill-current" />
+                                                <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
                                             </div>
-                                            <span className="text-sm text-gray-600 ml-1">
+                                            <span className="text-xs sm:text-sm text-gray-600 ml-1">
                                                 {product.rating.toFixed(1)}
                                             </span>
                                         </div>
 
                                         {/* Price and Actions */}
                                         <div className="flex items-center justify-between">
-                                            <div>
-                                                <span className="text-lg font-bold text-gray-900">
+                                            <div className="flex flex-col sm:flex-row sm:items-center">
+                                                <span className="text-base sm:text-lg font-bold text-gray-900">
                                                     ${product.price.toFixed(2)}
                                                 </span>
                                                 {product.discountPercentage > 0 && (
-                                                    <span className="text-sm text-gray-500 line-through ml-2">
+                                                    <span className="text-xs sm:text-sm text-gray-500 line-through sm:ml-2">
                                                         ${(product.price / (1 - product.discountPercentage / 100)).toFixed(2)}
                                                     </span>
                                                 )}
                                             </div>
-
                                             <div className="flex space-x-2">
-
                                                 {/* Cart Button */}
                                                 <button
-                                                    className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700"
+                                                    className="bg-blue-600 text-white p-1.5 sm:p-2 rounded-full hover:bg-blue-700 flex items-center justify-center min-w-[32px] min-h-[32px]"
                                                     onClick={(e) => {
                                                         e.stopPropagation(); // Mencegah event click sampai ke parent
                                                         addToCart(product.id);
                                                     }}
                                                 >
-                                                    <ShoppingCart className="w-4 h-4" />
+                                                    <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                                 </button>
                                             </div>
                                         </div>
