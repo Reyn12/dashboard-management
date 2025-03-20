@@ -28,6 +28,7 @@ export const BestProduct = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOption, setSortOption] = useState('default');
     const [cart, setCart] = useState<{ id: number, quantity: number }[]>([]);
+    const [wishlist, setWishlist] = useState<number[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8;
 
@@ -105,6 +106,20 @@ export const BestProduct = () => {
             } else {
                 // Add new item to cart
                 return [...prevCart, { id: productId, quantity: 1 }];
+            }
+        });
+    };
+
+    // Toggle wishlist function
+    const toggleWishlist = (productId: number) => {
+        setWishlist(prevWishlist => {
+            // Cek apakah produk sudah ada di wishlist
+            if (prevWishlist.includes(productId)) {
+                // Jika sudah ada, hapus dari wishlist
+                return prevWishlist.filter(id => id !== productId);
+            } else {
+                // Jika belum ada, tambahkan ke wishlist
+                return [...prevWishlist, productId];
             }
         });
     };
@@ -268,10 +283,12 @@ export const BestProduct = () => {
                                             className="absolute top-2 right-2 bg-white p-1.5 rounded-full shadow-sm hover:bg-gray-100"
                                             onClick={(e) => {
                                                 e.stopPropagation(); // Mencegah event click sampai ke parent
-                                                // Logic untuk wishlist
+                                                toggleWishlist(product.id);
                                             }}
                                         >
-                                            <Heart className="w-4 h-4 text-gray-600" />
+                                            <Heart 
+                                                className={`w-4 h-4 ${wishlist.includes(product.id) ? 'text-red-500 fill-red-500' : 'text-gray-600'}`} 
+                                            />
                                         </button>
                                     </div>
 
