@@ -56,7 +56,7 @@ export default function Sidebar({ isMobile = false }: SidebarProps) {
   // Jika hidden (di mobile), tampilkan hanya hamburger menu
   if (hidden && isMobile) {
     return (
-      <div className="fixed top-4 left-4 z-50">
+      <div className="fixed top-4 right-4 z-50">
         <button
           onClick={() => {
             setHidden(false);

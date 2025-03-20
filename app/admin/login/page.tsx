@@ -241,13 +241,13 @@ export default function LoginPage() {
         transition={{ duration: 0.6, delay: 0.3 }}
       >
         <motion.div 
-          className="max-w-lg"
+          className="max-w-lg w-full"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
         >
           <div className="relative w-full h-96">
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center ">
               <motion.div 
                 className="text-center"
                 initial={{ opacity: 0, scale: 0.9 }}
