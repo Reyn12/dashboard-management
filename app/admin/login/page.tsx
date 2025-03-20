@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from 'react';
-// import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -15,21 +15,73 @@ export default function LoginPage() {
     console.log({ email, password, rememberMe });
   };
 
+  // Animasi variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { 
+        type: "spring", 
+        stiffness: 100,
+        damping: 10
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-gray-900 to-blue-950">
       {/* Left side - Brand */}
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-8 md:p-16 text-white">
+      <motion.div 
+        className="w-full md:w-1/2 flex flex-col justify-center items-center p-8 md:p-16 text-white"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-md w-full">
-          <div className="mb-10">
-            <h1 className="text-4xl font-bold mb-2">Market Cyber</h1>
+          <motion.div 
+            className="mb-10"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <h1 className="text-4xl font-bold mb-2">Cyber Market</h1>
             <p className="text-blue-300">Admin Dashboard</p>
-          </div>
+          </motion.div>
           
-          <div className="bg-blue-900/30 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-blue-800/50">
-            <h2 className="text-2xl font-semibold mb-6">Login to Dashboard</h2>
+          <motion.div 
+            className="bg-blue-900/30 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-blue-800/50"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <motion.h2 
+              className="text-2xl font-semibold mb-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              Login to Dashboard
+            </motion.h2>
             
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
+            <motion.form 
+              onSubmit={handleSubmit}
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.div className="mb-4" variants={itemVariants}>
                 <label htmlFor="email" className="block text-sm font-medium text-blue-200 mb-1">
                   Email
                 </label>
@@ -42,9 +94,9 @@ export default function LoginPage() {
                   placeholder="Enter your email"
                   required
                 />
-              </div>
+              </motion.div>
               
-              <div className="mb-6">
+              <motion.div className="mb-6" variants={itemVariants}>
                 <label htmlFor="password" className="block text-sm font-medium text-blue-200 mb-1">
                   Password
                 </label>
@@ -57,9 +109,12 @@ export default function LoginPage() {
                   placeholder="Enter your password"
                   required
                 />
-              </div>
+              </motion.div>
               
-              <div className="flex items-center justify-between mb-6">
+              <motion.div 
+                className="flex items-center justify-between mb-6"
+                variants={itemVariants}
+              >
                 <div className="flex items-center">
                   <input
                     id="remember-me"
@@ -78,39 +133,61 @@ export default function LoginPage() {
                     Forgot password?
                   </Link>
                 </div>
-              </div>
+              </motion.div>
               
-              <button
+              <motion.button
                 type="submit"
-                className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-200 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                variants={itemVariants}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 Sign In
-              </button>
-            </form>
-          </div>
+              </motion.button>
+            </motion.form>
+          </motion.div>
           
-          <div className="mt-8 text-center text-blue-300 text-sm">
+          <motion.div 
+            className="mt-8 text-center text-blue-300 text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
+          >
             &copy; {new Date().getFullYear()} Market Cyber. All rights reserved.
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
       
       {/* Right side - Illustration */}
-      <div className="hidden md:flex md:w-1/2 bg-blue-900/20 items-center justify-center p-8">
-        <div className="max-w-lg">
+      <motion.div 
+        className="hidden md:flex md:w-1/2 bg-blue-900/20 items-center justify-center p-8"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
+        <motion.div 
+          className="max-w-lg"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.6 }}
+        >
           <div className="relative w-full h-96">
-            {/* Kamu bisa ganti dengan gambar yang sesuai */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
+              <motion.div 
+                className="text-center"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+              >
                 <h2 className="text-3xl font-bold text-white mb-4">Welcome to Market Cyber</h2>
                 <p className="text-blue-200 max-w-md mx-auto">
                   Manage your products, track sales, and grow your business with our powerful dashboard.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
