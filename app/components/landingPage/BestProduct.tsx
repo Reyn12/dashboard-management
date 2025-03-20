@@ -20,6 +20,36 @@ const SORT_OPTIONS = [
     { value: 'rating-desc', label: 'Highest Rated' }
 ];
 
+// Komponen Skeleton Card untuk loading state
+const SkeletonCard = () => {
+    return (
+        <div className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+            {/* Skeleton Image */}
+            <div className="h-36 sm:h-40 md:h-48 bg-gray-300"></div>
+            
+            {/* Skeleton Content */}
+            <div className="p-2 sm:p-3 md:p-4">
+                {/* Skeleton Category */}
+                <div className="h-3 bg-gray-300 rounded w-1/3 mb-2"></div>
+                
+                {/* Skeleton Title */}
+                <div className="h-4 bg-gray-300 rounded w-5/6 mb-3"></div>
+                
+                {/* Skeleton Rating */}
+                <div className="flex items-center mb-3">
+                    <div className="h-3 bg-gray-300 rounded w-16"></div>
+                </div>
+                
+                {/* Skeleton Price and Button */}
+                <div className="flex items-center justify-between">
+                    <div className="h-5 bg-gray-300 rounded w-1/4"></div>
+                    <div className="h-8 w-8 bg-gray-300 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export const BestProduct = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -246,8 +276,10 @@ export const BestProduct = () => {
 
                 {/* Loading state */}
                 {loading ? (
-                    <div className="flex justify-center items-center h-64">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+                        {Array.from({ length: 8 }).map((_, index) => (
+                            <SkeletonCard key={index} />
+                        ))}
                     </div>
                 ) : filteredProducts.length === 0 ? (
                     <div className="text-center py-12">
