@@ -3,8 +3,7 @@ import { HeroSection } from "./components/landingPage/HeroSection";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      {/* Komponen landing page akan dipanggil di sini nanti */}
+    <main className="min-h-screen overflow-visible">
       <Navbar />
       <HeroSection />
     </main>
