@@ -1,10 +1,13 @@
 # Cyber Market - Dashboard Management
 
-![Dashboard](./public/images/dashboard_screenshot.png)
+![Landing Page](./public/images/ss/landing-page-ss.png)
 
 ## Overview
 
 Cyber Market adalah aplikasi dashboard manajemen e-commerce modern yang dibangun dengan Next.js. Dashboard ini menyediakan antarmuka yang intuitif dan responsif untuk mengelola berbagai aspek dari platform e-commerce, termasuk:
+
+## Link Website
+- [Cyber Market](cyber-market-kohl.vercel.app/)
 
 - **Monitoring Metrics**: Melihat total produk, pengguna, keranjang belanja, dan pendapatan secara real-time
 - **Analisis Penjualan**: Visualisasi data penjualan dengan grafik interaktif
@@ -24,10 +27,13 @@ Aplikasi ini dibangun menggunakan:
 ## Screenshots
 
 ### Landing Page
-![Landing Page](./public/images/ss/landing-page-ss.pngdashboard_screenshot.png)
+![Landing Page](./public/images/ss/landing-page-ss.png)
 
-### Manajemen Pelanggan
-![Customers](./public/images/customers_screenshot.png)
+### Login Page
+![Login Page](./public/images/ss/login-page-ss.png)
+
+### Dashboard
+![Dashboard](./public/images/ss/dashboard-page-ss.png)
 
 ## Getting Started
 
@@ -53,13 +59,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - **Performa Tinggi**: Dioptimalkan dengan Next.js untuk loading yang cepat
 - **UI Modern**: Desain yang clean dan profesional dengan Tailwind CSS
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
