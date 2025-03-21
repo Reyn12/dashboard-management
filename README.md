@@ -7,8 +7,9 @@
 Cyber Market adalah aplikasi dashboard manajemen e-commerce modern yang dibangun dengan Next.js. Dashboard ini menyediakan antarmuka yang intuitif dan responsif untuk mengelola berbagai aspek dari platform e-commerce, termasuk:
 
 ## Link Website
-- [Cyber Market](cyber-market-kohl.vercel.app/)
+- [Cyber Market](https://cyber-market-kohl.vercel.app/)
 
+## Fitur Lengkap
 - **Monitoring Metrics**: Melihat total produk, pengguna, keranjang belanja, dan pendapatan secara real-time
 - **Analisis Penjualan**: Visualisasi data penjualan dengan grafik interaktif
 - **Manajemen Pelanggan**: Mengelola data pelanggan dengan fitur pencarian, filter, dan CRUD lengkap
@@ -50,12 +51,4 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Fitur
-
-- **Dashboard Interaktif**: Visualisasi data dengan animasi dan interaksi yang menarik
-- **Manajemen Pelanggan**: CRUD lengkap untuk data pelanggan
-- **Responsif**: Tampilan yang optimal di berbagai ukuran layar
-- **Performa Tinggi**: Dioptimalkan dengan Next.js untuk loading yang cepat
-- **UI Modern**: Desain yang clean dan profesional dengan Tailwind CSS
 
