@@ -1,31 +1,25 @@
 "use client";
 
 import React from "react";
-import { Bell, Search, Plus } from "lucide-react";
-import Image from "next/image";
+import { Bell, Search, Plus, ChevronDown, User, Users } from "lucide-react";
 
-export default function Header() {
+const Header = () => {
   return (
     <header className="flex items-center justify-between p-4 border-b">
-      <div className="text-xl font-semibold">Dashboard</div>
+      <div className="flex items-center">
+        <div className="text-xl font-semibold">Dashboard</div>
+      </div>
       
-      <div className="flex items-center gap-4">
+      {/* Desktop navigation */}
+      <div className="hidden lg:flex items-center gap-4">
         <div className="flex items-center">
           <div className="flex -space-x-2">
-            <Image 
-              src="/avatar1.png" 
-              alt="User Avatar" 
-              width={32} 
-              height={32} 
-              className="rounded-full border-2 border-white"
-            />
-            <Image 
-              src="/avatar2.png" 
-              alt="User Avatar" 
-              width={32} 
-              height={32} 
-              className="rounded-full border-2 border-white"
-            />
+            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs border-2 border-white">
+              <Users size={14} />
+            </div>
+            <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-xs border-2 border-white">
+              <Users size={14} />
+            </div>
           </div>
           <span className="ml-1 text-gray-500 text-sm">+2</span>
         </div>
@@ -54,20 +48,36 @@ export default function Header() {
         </div>
         
         <div className="flex items-center gap-2">
-          <Image
-            src="/user-avatar.png"
-            alt="User"
-            width={32}
-            height={32}
-            className="rounded-full"
-          />
+          <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white">
+            <User size={16} />
+          </div>
           <button className="text-gray-500">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+            <ChevronDown size={16} />
           </button>
+        </div>
+      </div>
+
+      {/* Mobile navigation */}
+      <div className="flex lg:hidden items-center gap-3">
+        <div className="relative">
+          <button className="p-1.5 rounded-full bg-gray-100 hover:bg-gray-200 relative">
+            <Bell size={16} />
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+              3
+            </span>
+          </button>
+        </div>
+        
+        <button className="p-1.5 rounded-full bg-gray-100 hover:bg-gray-200">
+          <Search size={16} />
+        </button>
+        
+        <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white">
+          <User size={16} />
         </div>
       </div>
     </header>
   );
 };
+
+export default Header;

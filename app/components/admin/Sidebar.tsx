@@ -84,7 +84,7 @@ export default function Sidebar({ isMobile = false }: SidebarProps) {
       <div className={`
         ${collapsed ? 'w-20' : 'w-64'} 
         ${isMobile ? 'fixed left-0 top-0 z-40' : ''} 
-        h-screen bg-white border-r border-gray-200 
+        h-screen bg-gray-50 border-r border-gray-200 
         transition-all duration-300 
         ${isMobile ? (hidden ? '-translate-x-full' : 'translate-x-0') : ''}
         relative
