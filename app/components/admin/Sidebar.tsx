@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   ShoppingBag,
   Users,
-  Settings,
   LogOut,
   PanelLeftClose,
   PanelLeftOpen,
@@ -50,7 +49,6 @@ export default function Sidebar({ isMobile = false }: SidebarProps) {
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
     { icon: ShoppingBag, label: 'Products', path: '/admin/dashboard/products' },
     { icon: Users, label: 'Customers', path: '/admin/dashboard/customers' },
-    { icon: Settings, label: 'Settings', path: '/admin/dashboard/settings' },
   ];
 
   // Jika hidden (di mobile), tampilkan hanya hamburger menu

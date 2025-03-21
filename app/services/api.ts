@@ -2,7 +2,8 @@
 const BASE_URL = "https://dummyjson.com";
 
 // Definisi tipe data
-interface Product {
+export interface Product {
+  category: string;
   id: number;
   title: string;
   price: number;
@@ -26,7 +27,7 @@ interface CartProduct {
   discountedPrice: number;
 }
 
-interface Cart {
+export interface Cart {
   id: number;
   products: CartProduct[];
   total: number;
@@ -36,7 +37,7 @@ interface Cart {
   totalQuantity: number;
 }
 
-interface ProductsResponse {
+export interface ProductsResponse {
   products: Product[];
   total: number;
   skip: number;
