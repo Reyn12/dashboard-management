@@ -19,15 +19,15 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`py-4 px-6 md:px-8 lg:px-16 sticky top-0 transition-all duration-300 z-50 ${scrolled ? "bg-white shadow-md" : "bg-blue-50"
+    <nav className={`py-4 px-6 md:px-8 lg:px-16 sticky top-0 transition-all duration-300 z-50 ${scrolled ? "bg-white shadow-md" : "bg-gradient-to-br from-indigo-950 via-blue-900 to-indigo-800 color-white"
       }`}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <span className="text-blue-600 font-bold text-xl">
+          <span className={`${scrolled ? "text-blue-600" : "text-white"} font-bold text-xl`}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block mr-2">
-              <rect width="24" height="24" rx="6" fill="#3B82F6" />
-              <path d="M7 12L10 15L17 8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <rect width="24" height="24" rx="6" fill={scrolled ? "#3B82F6" : "#FFFFFF"} />
+              <path d="M7 12L10 15L17 8" stroke={scrolled ? "white" : "#3B82F6"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             Cyber Market
           </span>
@@ -35,16 +35,16 @@ export const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center space-x-8">
-          <Link href="/how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors text-sm font-medium">
+          <Link href="/how-it-works" className={`${scrolled ? "text-gray-700" : "text-white"} hover:text-blue-600 transition-colors text-sm font-medium`}>
             How it works
           </Link>
-          <Link href="/about-us" className="text-gray-700 hover:text-blue-600 transition-colors text-sm font-medium">
+          <Link href="/about-us" className={`${scrolled ? "text-gray-700" : "text-white"} hover:text-blue-600 transition-colors text-sm font-medium`}>
             About Us
           </Link>
-          <Link href="/features" className="text-gray-700 hover:text-blue-600 transition-colors text-sm font-medium">
+          <Link href="/features" className={`${scrolled ? "text-gray-700" : "text-white"} hover:text-blue-600 transition-colors text-sm font-medium`}>
             Features
           </Link>
-          <Link href="/pricing" className="text-gray-700 hover:text-blue-600 transition-colors text-sm font-medium">
+          <Link href="/pricing" className={`${scrolled ? "text-gray-700" : "text-white"} hover:text-blue-600 transition-colors text-sm font-medium`}>
             Pricing
           </Link>
         </div>
