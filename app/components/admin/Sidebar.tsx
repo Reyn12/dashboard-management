@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   ShoppingBag,
   Users,
-  Settings,
   LogOut,
   PanelLeftClose,
   PanelLeftOpen,
@@ -50,13 +49,12 @@ export default function Sidebar({ isMobile = false }: SidebarProps) {
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
     { icon: ShoppingBag, label: 'Products', path: '/admin/dashboard/products' },
     { icon: Users, label: 'Customers', path: '/admin/dashboard/customers' },
-    { icon: Settings, label: 'Settings', path: '/admin/dashboard/settings' },
   ];
 
   // Jika hidden (di mobile), tampilkan hanya hamburger menu
   if (hidden && isMobile) {
     return (
-      <div className="fixed top-4 left-4 z-50">
+      <div className="fixed top-4 right-4 z-50">
         <button
           onClick={() => {
             setHidden(false);
@@ -84,7 +82,7 @@ export default function Sidebar({ isMobile = false }: SidebarProps) {
       <div className={`
         ${collapsed ? 'w-20' : 'w-64'} 
         ${isMobile ? 'fixed left-0 top-0 z-40' : ''} 
-        h-screen bg-white border-r border-gray-200 
+        h-screen bg-gray-50 border-r border-gray-200 
         transition-all duration-300 
         ${isMobile ? (hidden ? '-translate-x-full' : 'translate-x-0') : ''}
         relative
