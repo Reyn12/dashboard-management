@@ -34,7 +34,7 @@ export default function DashboardLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Main content dengan scroll */}
-        <main className="flex-1 p-4 md:p-6 bg-gray-100 overflow-y-auto">
+        <main className="flex-1 p-4 md:p-0 bg-gray-100 overflow-y-auto">
           {children}
         </main>
       </div>
