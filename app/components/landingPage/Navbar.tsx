@@ -51,7 +51,7 @@ export const Navbar = () => {
 
         {/* CTA Button */}
         <div>
-          <Link href="/demo">
+          <Link href="/admin/login">
             <button className="bg-indigo-800 hover:bg-indigo-700 text-white text-sm font-medium py-2 px-4 rounded-full transition-colors">
               Book the demo
             </button>

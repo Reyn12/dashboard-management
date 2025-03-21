@@ -86,7 +86,7 @@ export const HeroSection = () => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
                     >
-                        <Link href="/trial">
+                        <Link href="/admin/login">
                             <motion.button 
                                 className="bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 px-6 rounded-full transition-all shadow-lg hover:shadow-indigo-500/50"
                                 whileHover={{ scale: 1.05 }}
@@ -95,7 +95,7 @@ export const HeroSection = () => {
                                 Start your free trial
                             </motion.button>
                         </Link>
-                        <Link href="/demo">
+                        <Link href="/admin/login">
                             <motion.button 
                                 className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-medium py-3 px-6 rounded-full border border-white/20 transition-all shadow-lg"
                                 whileHover={{ scale: 1.05 }}
