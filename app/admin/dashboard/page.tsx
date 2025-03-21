@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "@/app/components/admin/dashboard/Header";
+import Header from "@/app/components/admin/Header";
 import CardTotal from "@/app/components/admin/dashboard/CardTotal";
 import SalesRevenue from "@/app/components/admin/dashboard/SalesRevenue";
 import TopCategories from "@/app/components/admin/dashboard/TopCategories";
@@ -8,7 +8,7 @@ import TopCategories from "@/app/components/admin/dashboard/TopCategories";
 export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-white p-4">
-      <Header />
+      <Header title="Dashboard" />
       <CardTotal />
       
       {/* Grid untuk Analytics */}
