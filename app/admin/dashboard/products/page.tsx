@@ -6,7 +6,8 @@ import { Search, Plus, Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-
 import Image from "next/image";
 import ModalTambah from "@/app/components/admin/product/ModalTambah";
 import ModalEdit from "@/app/components/admin/product/ModalEdit";
-
+import toast from "react-hot-toast";
+import ModalDelete from "@/app/components/admin/product/ModalDelete";
 
 
 interface Product {
@@ -31,6 +32,9 @@ export default function ProductsPage() {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deletingProduct, setDeletingProduct] = useState<Product | null>(null);
 
 
   // Pagination
@@ -92,9 +96,38 @@ export default function ProductsPage() {
     setIsEditModalOpen(true);
   };
 
-  const handleDeleteProduct = (id: number) => {
-    alert(`Hapus produk dengan ID: ${id}`);
-    // Implementasi penghapusan produk bisa ditambahkan di sini
+  const handleDeleteProduct = (product: Product) => {
+    setDeletingProduct(product);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deletingProduct) return;
+
+    try {
+      setLoading(true);
+
+      // Panggil API untuk delete produk
+      const response = await fetch(`https://dummyjson.com/products/${deletingProduct.id}`, {
+        method: 'DELETE',
+      });
+
+      const result = await response.json();
+
+      if (result.isDeleted) {
+        // Hapus produk dari state
+        setProducts(products.filter(product => product.id !== deletingProduct.id));
+        toast.success("Produk berhasil dihapus");
+      } else {
+        toast.error("Gagal menghapus produk");
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      toast.error("Terjadi kesalahan saat menghapus produk");
+      setLoading(false);
+    }
   };
 
   // Skeleton loading component
@@ -200,10 +233,10 @@ export default function ProductsPage() {
                               <Pencil size={18} />
                             </button>
                             <button
-                              onClick={() => handleDeleteProduct(product.id)}
-                              className="text-red-600 hover:text-red-900"
+                              onClick={() => handleDeleteProduct(product)}
+                              className="text-red-500 hover:text-red-700"
                             >
-                              <Trash2 size={18} />
+                              <Trash2 className="h-5 w-5" />
                             </button>
                           </div>
                         </td>
@@ -324,6 +357,12 @@ export default function ProductsPage() {
         onClose={() => setIsEditModalOpen(false)}
         onSuccess={handleAddSuccess}
         productId={editingProductId}
+      />
+      <ModalDelete
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        productName={deletingProduct?.title || ""}
       />
     </div>
 
